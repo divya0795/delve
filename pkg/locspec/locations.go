@@ -574,7 +574,7 @@ func SubstitutePath(path string, rules [][2]string) string {
 		from, to := r[0], r[1]
 
 		// if we have an exact match, use it directly.
-		if path == from {
+		if path == from || (caseInsensitive && strings.EqualFold(path, from)) {
 			return to
 		}
 
@@ -585,11 +585,7 @@ func SubstitutePath(path string, rules [][2]string) string {
 			rest = path
 		} else {
 			if caseInsensitive {
-				match = strings.HasPrefix(strings.ToLower(path), strings.ToLower(from))
-				if match {
-					path = strings.ToLower(path)
-					from = strings.ToLower(from)
-				}
+				match = len(path) >= len(from) && strings.EqualFold(path[:len(from)], from)
 			} else {
 				match = strings.HasPrefix(path, from)
 			}

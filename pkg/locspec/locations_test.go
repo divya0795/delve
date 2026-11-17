@@ -170,9 +170,15 @@ func platformCases() []tCase {
 		{[]tRule{{`c:\tmp\path\file.go`, `d:\new\path2\file2.go`}}, `c:\tmp\path\file.go`, `d:\new\path2\file2.go`},
 		// Should be case-insensitive
 		{[]tRule{{`c:\tmp\path`, `d:\new\path2`}}, `C:\TmP\PaTh\file.go`, `d:\new\path2\file.go`},
+		{[]tRule{{`c:\tmp\path\file.go`, `d:\new\path2\file2.go`}}, `C:\TmP\PaTh\file.go`, `d:\new\path2\file2.go`},
+		// Case-insensitive matching should not change the case of the rest of the path
+		{[]tRule{{`c:\tmp\path`, ``}}, `C:\TMP\PATH\Sub\File.go`, `Sub\File.go`},
+		// Should not change the case of paths that are not substituted
+		{[]tRule{{`C:\Work\Proj`, `d:\new\path2`}}, `C:\Work\ProjX\Main.go`, `C:\Work\ProjX\Main.go`},
 	}
 	casesCross := []tCase{
 		{[]tRule{{"C:\\some\\repo", "/go/src/github.com/some/repo/"}}, `c:\some\repo\folder\file.go`, "/go/src/github.com/some/repo/folder/file.go"},
+		{[]tRule{{`C:\work\proj`, "/home/me/proj"}}, `C:\work\proj\vendor\github.com\BurntSushi\toml\Decode.go`, "/home/me/proj/vendor/github.com/BurntSushi/toml/Decode.go"},
 	}
 
 	r := append(casesUnix, casesLinux...)
