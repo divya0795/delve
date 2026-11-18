@@ -11,7 +11,7 @@ The path substitution code is SubstitutePath in pkg/locspec/locations.go.
 
 #### Delve command line client
 
-The command line client reads the path substitution rules from Delve's YAML configuration file located at `$XDG_CONFIG_HOME/dlv/config.yml` or `.dlv/config.yml` inside the home directory on Windows.
+The command line client reads the path substitution rules from Delve's YAML configuration file `config.yml`, which is found in `$XDG_CONFIG_HOME/dlv` if `$XDG_CONFIG_HOME` is set, otherwise in `$HOME/.config/dlv` on Linux and `$HOME/.dlv` on other operating systems (see [Configuration](config.md)).
 
 The `substitute-path` entry should look like this:
 
